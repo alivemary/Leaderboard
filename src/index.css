@@ -7,12 +7,16 @@ body {
 		background-color: lightgrey;
 		text-align: center;
 	}
-	td {
-		background-color: white;
-	}
+	
   table {
     border-collapse: collapse;
   }
   td, th {
     border: 1px solid darkgrey;
+  }
+  tr:nth-child(even) {
+    background-color: #eee;
+  }
+  tr:nth-child(odd) {
+    background-color: #fff;
   }

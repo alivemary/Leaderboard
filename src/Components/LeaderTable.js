@@ -1,18 +1,30 @@
 import React from 'react';
-import CamperList from './CamperList.js';
+import $ from 'jquery';
+import CamperList from './CamperList';
 
 class LeaderTable extends React.Component {
 	constructor (props) {
 		super (props);
 		this.state = {
-      campers: [
-        {name: 'Alise', place30: 234, placeAll: 1076},
-        {name: 'Bosse', place30: 204, placeAll: 1087},
-        {name: 'Polly', place30: 134, placeAll: 2076},
-        {name: 'Kitty Brawn', place30: 94, placeAll: 1046},
-        {name: 'Mary Sheep', place30: 34, placeAll: 76},
-      ]
+      campers: []
     }
+	}
+	getCampersList(){
+		$.ajax({
+			url: 'https://fcctop100.herokuapp.com/api/fccusers/top/recent',
+			dataType: 'json',
+			cache: false,
+			success: function(data){
+				this.setState({campers: data});
+			}.bind(this),
+			error: function(xhr, status, err){
+				console.log(err);
+			}
+		});
+	}
+
+	componentDidMount(){
+		this.getCampersList();
 	}
 
 	render () {
@@ -31,7 +43,6 @@ class LeaderTable extends React.Component {
 
 		return (
 		<table style={style}>
-
             <thead>
             <tr>
             	<th>#</th>
