@@ -1,0 +1,18 @@
+body {
+	background-color: whitesmoke;
+	margin: auto;
+
+	}
+	th {
+		background-color: lightgrey;
+		text-align: center;
+	}
+	td {
+		background-color: white;
+	}
+  table {
+    border-collapse: collapse;
+  }
+  td, th {
+    border: 1px solid darkgrey;
+  }
