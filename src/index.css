@@ -7,7 +7,7 @@ body {
 		background-color: lightgrey;
 		text-align: center;
 	}
-	
+
   table {
     border-collapse: collapse;
   }
@@ -20,3 +20,6 @@ body {
   tr:nth-child(odd) {
     background-color: #fff;
   }
+	.sorted {
+		 color: blue;
+	}

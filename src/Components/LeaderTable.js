@@ -1,17 +1,21 @@
 import React from 'react';
 import $ from 'jquery';
+import FontAwesome from 'react-fontawesome';
 import CamperList from './CamperList';
 
 class LeaderTable extends React.Component {
 	constructor (props) {
 		super (props);
 		this.state = {
-      campers: []
-    }
+      campers: [],
+			sorted: true
+    };
+		this.handleClick1 = this.handleClick1.bind(this);
+		this.handleClick2 = this.handleClick2.bind(this);
 	}
-	getCampersList(){
+	getCampersList(urlAddress){
 		$.ajax({
-			url: 'https://fcctop100.herokuapp.com/api/fccusers/top/recent',
+			url: urlAddress,
 			dataType: 'json',
 			cache: false,
 			success: function(data){
@@ -22,9 +26,22 @@ class LeaderTable extends React.Component {
 			}
 		});
 	}
-
+	handleClick1(e){
+		e.preventDefault();
+	 	this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/recent');
+		$('#thirty').addClass('sorted');
+		$('#alltime').removeClass('sorted');
+		this.setState({sorted: true});
+	}
+	handleClick2(e){
+		e.preventDefault();
+	 	this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/alltime');
+		$('#thirty').removeClass('sorted');
+		$('#alltime').addClass('sorted');
+		this.setState({sorted: false});
+	}
 	componentDidMount(){
-		this.getCampersList();
+		this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/recent');
 	}
 
 	render () {
@@ -38,7 +55,19 @@ class LeaderTable extends React.Component {
     	};
 
 		let styleLeft = {
-			textAlign: 'left'
+					textAlign: 'left'
+		}
+
+		let descSign = <FontAwesome name='sort-desc'/>;
+		let title1 = "Points in past 30 days  ";
+		let title2 = "All time points  ";
+		let descSign1='', descSign2='';
+
+		if (this.state.sorted)	{
+			descSign1=descSign;
+		}
+		else {
+			descSign2=descSign;
 		}
 
 		return (
@@ -47,8 +76,12 @@ class LeaderTable extends React.Component {
             <tr>
             	<th>#</th>
             	<th style={styleLeft}>Camper Name</th>
-            	<th>Points in past 30 days</th>
-            	<th>All time points</th>
+            	<th id='thirty' className='sorted' onClick={this.handleClick1}>
+							{title1}{descSign1}
+							</th>
+							<th id='alltime' onClick={this.handleClick2}>
+							{title2}{descSign2}
+							</th>
             </tr>
             </thead>
             <CamperList campersList={this.state.campers} />
