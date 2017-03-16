@@ -37,5 +37,8 @@ class CamperList extends React.Component {
 CamperList.propTypes={
     campersList: React.PropTypes.array
 }
+CamperList.defaultProps={
+    campersList: []
+}
 
 export default CamperList;
